@@ -31,7 +31,7 @@ class Gate implements GateContract
      *
      * @throws \Exception
      */
-    public function allows($ability, $arguments): bool
+    public function allows($ability, $arguments)
     {
         return $this->check($ability, $arguments);
     }
@@ -45,7 +45,7 @@ class Gate implements GateContract
      *
      * @throws \Exception
      */
-    public function denies($ability, $arguments): bool
+    public function denies($ability, $arguments)
     {
         return !$this->allows($ability, $arguments);
     }
@@ -59,7 +59,7 @@ class Gate implements GateContract
      *
      * @throws \Exception
      */
-    public function check($abilities, $arguments): bool
+    public function check($abilities, $arguments)
     {
         return collect($abilities)->every(function ($ability) use ($arguments) {
             return (bool)$this->raw($ability, $arguments);
@@ -75,7 +75,7 @@ class Gate implements GateContract
      *
      * @throws \Exception
      */
-    public function any($abilities, $arguments): bool
+    public function any($abilities, $arguments)
     {
         return collect($abilities)->contains(function ($ability) use ($arguments) {
             return $this->check($ability, $arguments);
@@ -137,7 +137,7 @@ class Gate implements GateContract
      *
      * @return object|null
      */
-    protected function resolveUser(): ?object
+    protected function resolveUser()
     {
         return $this->userResolver;
     }

@@ -122,11 +122,13 @@ class Gate implements GateContract
             throw new Exception('Policy with name ' . $className . ' does not exist!');
         }
 
-        $user = !is_array($arguments)
-            ? $this->resolveUser()
-            : $arguments[1];
+        $args = is_array($arguments) ? $arguments : [];
 
-        return method_exists($policy, $ability) ? $policy->$ability($user) : FALSE;
+        $args[0] = $this->resolveUser();
+
+        return method_exists($policy, $ability)
+            ? call_user_func_array([$policy, $ability], $args)
+            : false;
         // } else {
         //     throw new Exception('Model with name ' . $arguments . ' does not exist!');
         // }
